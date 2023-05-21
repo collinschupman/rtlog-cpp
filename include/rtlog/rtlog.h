@@ -10,8 +10,8 @@
 #include <fmt/format.h>
 #endif // RTLOG_USE_FMTLIB
 
-#include <readerwriterqueue.h>
 #include <stb_sprintf.h>
+#include <boost/lockfree/spsc_queue.hpp>
 
 namespace rtlog 
 {
@@ -86,7 +86,7 @@ public:
         }
 
         // Even if the message was truncated, we still try to enqueue it to minimize data loss
-        const bool dataWasEnqueued = mQueue.try_enqueue(dataToQueue);
+        const bool dataWasEnqueued = mQueue.push(dataToQueue);
 
         if (!dataWasEnqueued)
         {
@@ -175,7 +175,7 @@ public:
         int numProcessed = 0;
 
         InternalLogData value;
-        while (mQueue.try_dequeue(value)) 
+        while (mQueue.pop(value))
         {
             printLogFn(value.mLogData, value.mSequenceNumber, "%s", value.mMessage.data());
             numProcessed++;
@@ -192,7 +192,7 @@ private:
         std::array<char, MaxMessageLength> mMessage{};
     };
 
-    moodycamel::ReaderWriterQueue<InternalLogData> mQueue{ MaxNumMessages };
+    boost::lockfree::spsc_queue<InternalLogData> mQueue{MaxNumMessages};
 };
 
 
