@@ -1,5 +1,7 @@
 #include <doctest/doctest.h>
-#include <rtlog/rtlog.h>
+//#include <rtlog/rtlog.h>
+#include <rtlog/LogProcessingThread.h>
+#include <rtlog/Logger.h>
 
 namespace rtlog::test
 {

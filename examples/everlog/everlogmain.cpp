@@ -1,4 +1,5 @@
-#include <rtlog/rtlog.h>
+#include <rtlog/Logger.h>
+#include <rtlog/LogProcessingThread.h>
 
 #include <fstream>
 

@@ -7,7 +7,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 # Add library header files
 set(HEADERS
-  include/rtlog/rtlog.h
+    include/rtlog/Logger.h
+    include/rtlog/LogProcessingThread.h
 )
 
 # Create library target
