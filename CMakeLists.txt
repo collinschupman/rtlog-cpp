@@ -24,12 +24,6 @@ target_include_directories(rtlog INTERFACE
 # Find Boost lockfree
 find_package(Boost REQUIRED)
 
-# Set project include directories
-target_include_directories(${PROJECT_NAME} INTERFACE
-  $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-  $<INSTALL_INTERFACE:include>
-)
-
 target_include_directories(${PROJECT_NAME} INTERFACE ${Boost_INCLUDE_DIRS})
 #target_link_libraries(${PROJECT_NAME} INTERFACE Boost::boost)
 
@@ -67,6 +61,7 @@ if(NOT TARGET stb::stb)
     )
 endif()
 
+# TODO: document RTLOG_USE_FMTLIB
 if (RTLOG_USE_FMTLIB AND NOT TARGET fmt::fmt)
     include(FetchContent)
 
